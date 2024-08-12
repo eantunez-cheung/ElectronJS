@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/eantunez-cheung/ElectronJS_App/issues"
   },
-  "homepage": "https://github.com/eantunez-cheung/ElectronJS_App#readme"
+  "homepage": "https://github.com/eantunez-cheung/ElectronJS_App#readme",
+  "devDependencies": {
+    "electron": "^31.3.1"
+  }
 }
