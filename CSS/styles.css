@@ -1,0 +1,22 @@
+.title {
+    color: darkcyan;
+    font-weight: bold;
+}
+
+p{
+    font-size: 12;
+}
+
+#counter{
+    text-align: center;
+}
+
+.buttonContainer{
+    text-align: center;
+    
+}
+
+button{
+    width: fit-content;
+    padding: 5,10;
+}

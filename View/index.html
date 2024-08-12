@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
+
+    <title>Electron JS App</title>
+</head>
+
+<body>
+    <h1 class="title">Lorem.</h1>
+    Titre : <input type="text" id="title">
+    <button id="sendButton">Envoyer</button>
+    <p id="info"></p>
+    <p id="counter">Button Clicked : 0</p>
+    <div class="buttonContainer">
+        <button id="incrementButton">Increment</button>
+    </div>
+    <p id="response">Réponse apparaîtra ici...</p>
+    <script src="../JS/renderer.js"></script>
+</body>
+
+</html>
