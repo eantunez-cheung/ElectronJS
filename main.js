@@ -1,5 +1,38 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron/main')
+const { app, BrowserWindow, Menu, dialog } = require('electron/main')
 const path = require('node:path')
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+
+// Chemin vers la base de données SQLite
+const dbPath = path.join(__dirname, 'database.db');
+const sqlFilePath = path.join(__dirname, 'setup.sql');
+
+let db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('Erreur lors de l\'ouverture de la base de données:', err.message);
+    } else {
+        console.log('Connexion réussie à la base de données SQLite.');
+    }
+    executeSqlScript(sqlFilePath, db);
+});
+
+function executeSqlScript(filePath, db) {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erreur lors de la lecture du fichier SQL:', err.message);
+            return;
+        }
+
+        // Exécuter le script SQL
+        db.exec(data, (err) => {
+            if (err) {
+                console.error('Erreur lors de l\'exécution du script SQL:', err);
+            } else {
+                console.log('Script SQL exécuté avec succès.');
+            }
+        });
+    });
+}
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -14,13 +47,6 @@ const createWindow = () => {
     })
     console.log(path.join(__dirname, 'preload.js'))
     win.loadFile('View/index.html')
-
-    ipcMain.on('set-title', (event, title) => {
-        console.log(title)
-        const webContents = event.sender
-        const win = BrowserWindow.fromWebContents(webContents)
-        win.setTitle(title)
-      })
 
     // const menu = Menu.buildFromTemplate([
     //     {
@@ -99,7 +125,14 @@ app.whenReady().then(() => {
 })
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
+    db.close((err) => {
+        if (err) {
+            console.error('Erreur lors de la fermeture de la base de données:', err.message);
+        } else {
+            console.log('Base de données fermée.');
+        }
+        if (process.platform !== 'darwin') {
+            app.quit();
+        }
+    });
+    })
