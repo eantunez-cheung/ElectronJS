@@ -9,7 +9,7 @@ CREATE TABLE adresses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     adresse TEXT NOT NULL,
     ville TEXT NOT NULL,
-    code_postal TEXT NOT NULL,
+    code_postal TEXT NOT NULL
 );
 
 CREATE TABLE clients_adresses (
